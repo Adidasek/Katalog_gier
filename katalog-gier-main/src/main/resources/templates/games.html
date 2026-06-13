@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Katalog gier</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>🎮 Katalog gier komputerowych</h2>
+
+        <div>
+            <a href="/favorites"
+               class="btn btn-outline-danger">
+                ❤️ Ulubione
+            </a>
+
+            <a sec:authorize="hasAuthority('ADMIN')"
+               href="/admin/games"
+               class="btn btn-warning">
+                ⚙ Panel admina
+            </a>
+
+            <a href="/logout"
+               class="btn btn-outline-secondary">
+                Wyloguj
+            </a>
+        </div>
+    </div>
+
+    <div th:if="${games.isEmpty()}">
+        <div class="alert alert-info">
+            Brak gier w katalogu. Dodamy je zaraz przez panel admina albo SQL.
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-4" th:each="g : ${games}">
+
+            <div class="card h-100 shadow-sm">
+
+                <img th:src="${g.imageUrl}"
+                     class="card-img-top"
+                     style="height: 220px; object-fit: cover;">
+
+                <div class="card-body">
+
+                    <h5 class="card-title" th:text="${g.title}"></h5>
+
+                    <p class="card-text">
+                        <b>Gatunek:</b>
+                        <span th:text="${g.genre}"></span>
+                    </p>
+
+                    <p class="card-text">
+                        <b>Platforma:</b>
+                        <span th:text="${g.platform}"></span>
+                    </p>
+
+                    <p class="card-text">
+                        <b>Ocena:</b>
+                        <span th:text="${g.rating}"></span>/10
+                    </p>
+
+                    <a th:href="@{'/game/' + ${g.id}}" class="btn btn-primary">
+                        Szczegóły
+                    </a>
+
+                    <a th:href="@{'/favorite/add/' + ${g.id}}" class="btn btn-danger">
+                        ❤️
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

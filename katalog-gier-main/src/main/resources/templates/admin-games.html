@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Panel admina</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="container mt-5">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>⚙ Panel admina — gry</h2>
+
+    <div>
+        <a href="/games" class="btn btn-secondary">Powrót do katalogu</a>
+        <a href="/admin/add-game" class="btn btn-success">➕ Dodaj grę</a>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tytuł</th>
+        <th>Gatunek</th>
+        <th>Platforma</th>
+        <th>Ocena</th>
+        <th>Akcja</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="g : ${games}">
+        <td th:text="${g.id}"></td>
+        <td th:text="${g.title}"></td>
+        <td th:text="${g.genre}"></td>
+        <td th:text="${g.platform}"></td>
+        <td th:text="${g.rating}"></td>
+        <td>
+            <a th:href="@{'/admin/delete/' + ${g.id}}"
+               class="btn btn-danger btn-sm">
+                Usuń
+            </a>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+
+</body>
+</html>
